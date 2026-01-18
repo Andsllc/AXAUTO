@@ -1,4 +1,3 @@
-app = "ax-worker"
 primary_region = "iad"
 
 [http_service]
