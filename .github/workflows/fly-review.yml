@@ -4,9 +4,13 @@ on:
     types: [opened, reopened, synchronize, closed]
 
 env:
+  # 重要：Fly CLIが読む可能性がある両方を渡す
   FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+  FLY_ACCESS_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
   FLY_REGION: iad
   FLY_ORG: personal
+
 
 jobs:
   review_app:
@@ -16,9 +20,10 @@ jobs:
     concurrency:
       group: pr-${{ github.event.number }}
 
-    environment:
-      name: review
-      url: ${{ steps.deploy.outputs.url }}
+environment:
+  name: review
+  url: ${{ steps.deploy.outputs.url }}
+
 
     steps:
       - name: Get code
