@@ -15,8 +15,6 @@ env:
 jobs:
   review_app:
     runs-on: ubuntu-latest
-    outputs:
-      url: ${{ steps.deploy.outputs.url }}
     concurrency:
       group: pr-${{ github.event.number }}
 
@@ -26,14 +24,12 @@ environment:
 
 
     steps:
-      - name: Get code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Deploy PR app to Fly.io
+      - name: Deploy
         id: deploy
         uses: superfly/fly-pr-review-apps@1.2.1
         with:
-          # ★重要：PR番号を必ず含める
           name: ax-worker-pr-${{ github.event.number }}
           org: personal
           region: iad
